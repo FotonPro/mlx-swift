@@ -289,9 +289,6 @@ let cmlx = Target.target(
         .define("MLX_VERSION", to: "\"0.31.1\""),
     ],
     linkerSettings: linkerSettings,
-    plugins: [
-        .plugin(name: "CudaBuild")
-    ],
 )
 
 let package = Package(
@@ -317,7 +314,6 @@ let package = Package(
     dependencies: [
         // for Complex type
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
     ],
     targets: [
         cmlx,
@@ -413,20 +409,6 @@ let package = Package(
             dependencies: ["MLX"],
             path: "Source/Examples",
             sources: ["CustomFunctionExampleSimple.swift"]
-        ),
-        .executableTarget(
-            name: "encuda",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ],
-            path: "Source/Encuda",
-        ),
-        .plugin(
-            name: "CudaBuild",
-            capability: .buildTool(),
-            dependencies: [
-                .target(name: "encuda")
-            ],
         ),
     ],
     cxxLanguageStandard: .gnucxx20
